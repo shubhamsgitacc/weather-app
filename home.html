@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width= , initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/36a10c69a4.js" crossorigin="anonymous"></script>
+    <title>Weather App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            height: 100vh;
+            background: linear-gradient(110.12deg, #120E29 -4.71%, #B4AAE8 112.67%);
+        }
+        
+        .box {
+            height: 40vh;
+            width: 18vw;
+            background: linear-gradient(149.14deg, rgba(255, 254, 254, 0.13) 2.82%, rgba(255, 255, 255, 0.1) 100%);
+            position: absolute;
+            right: 40vw;
+            top: 28%;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            box-shadow: 0px 0px 9px 4px rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.39);
+            backdrop-filter: blur(30px);
+            align-items: center;
+        }
+        
+        .circle {
+            position: absolute;
+            width: 18vh;
+            height: 18vh;
+            background: linear-gradient(176.67deg, #FF9900 2.75%, #FF003D 102.31%);
+            border-radius: 50%;
+            top: 22%;
+            left: 38%;
+            z-index: -3;
+        }
+        
+        .fa-solid {
+            position: absolute;
+            top: 5vh;
+            left: 7vw;
+            size: 40px;
+            animation: fas-icon 3s linear infinite alternate;
+        }
+        
+        @keyframes fas-icon {
+            from {
+                transform: scale(.8);
+            }
+            to {
+                transform: scale(1.2);
+            }
+        }
+        
+        .info {
+            padding-left: 30px;
+            padding-top: 30px;
+        }
+        
+        .fa-street-view {
+            position: relative;
+            left: -30px;
+            top: -.3vh;
+            animation: rotates 3s linear infinite alternate;
+        }
+        
+        @keyframes rotates {
+            from {
+                transform: translateX(-0.5rem);
+            }
+            to {
+                transform: translateX(0.5rem);
+            }
+        }
+        
+        .location {
+            position: absolute;
+            top: 15.3vh;
+            left: 6vw;
+            padding-bottom: 5px;
+        }
+        
+        #date {
+            position: relative;
+            top: 10px;
+            left: 10px;
+        }
+        
+        .tempmin_max {
+            position: relative;
+            top: 18px;
+            left: -10px;
+            padding-top: 10px;
+        }
+        
+        .temp {
+            position: relative;
+            top: 15px;
+            left: 35px;
+            padding-top: 5px;
+        }
+    </style>
+</head>
+
+<!-- <body>background: linear-gradient(105.98deg, rgba(84, 215, 233, 0.99) 0.73%, rgba(232, 16, 223, 0.58) 144.76%); -->
+
+<body>
+
+
+    <div class="box">
+
+        <!-- background-image: linear-gradient(to bottom right, red, yellow); -->
+        <div class="wave-one"></div>
+        <div class="wave-two"></div>
+        <div class="wave-three"></div>
+        <div id="weathercon">
+            <i class="fa-solid fa-sun  fa-3x" style="color:#eccd68"></i></div>
+        <div class="info">
+            <h2 class="location">{%location%} , {%country%}</h2>
+            <i class="fa-solid fa-street-view fa-3x" style="color: rgb(0, 0, 0)"></i>
+            <p id="date">WED | OCT 23 | 10:49AM</p>
+            <h1 class="temp">{%tempval%}</h1>
+            <p class="tempmin_max">Min {%tempmin%}C | Max {%tempmax%}C</p>
+        </div>
+
+    </div>
+    <div class="circle"></div>
+
+</body>
+<script>
+    const Curdate = document.getElementById("date");
+    let Weathercon = document.getElementById('weathercon');
+    const tempstatus = "{%tempStatus%}";
+    if (tempstatus == "Sunny") {
+        weathercon.innerHTML = "<i class='fa-solid fa-sun  fa-3x' style='color:#eccd68'></i>"
+    } else if (tempstatus == "Clouds") {
+        weathercon.innerHTML = "<i class='fa-solid fa-cloud-bolt  fa-3x' style='color:#eccd68'></i>"
+    } else if (tempstatus == "Rainy") {
+        weathercon.innerHTML = "<i class='fa-solid fa-cloud-sun-rain '></i>"
+    } else if (tempstatus == "Rainy") {
+        weathercon.innerHTML = "<i class='fa-solid fa-cloud-sun-rain '></i>"
+    } else {
+        weathercon.innerHTML = "<i class='fa-solid fa-sun-cloud'></i>"
+    }
+    const getCurday = () => {
+
+            var Weekday = new Array(7);
+            Weekday[0] = "Sun";
+            Weekday[1] = "Mon";
+            Weekday[2] = "Tues";
+            Weekday[3] = "Wed";
+            Weekday[4] = "Thu";
+            Weekday[5] = "Fri";
+            Weekday[6] = "Sat";
+            let curTimes = new Date();
+            let day = (Weekday[curTimes.getDay()]);
+            return day;
+
+        }
+        //getCurday();
+    const getCurTime = () => {
+
+        var Months = new Array(12);
+        Months[1] = "Jan";
+        Months[2] = "Feb";
+        Months[3] = "Mar";
+        Months[4] = "Apr";
+        Months[5] = "May";
+        Months[6] = "June";
+        Months[7] = "July";
+        Months[8] = "Aug";
+        Months[9] = "Sep"
+        Months[10] = "Oct"
+        Months[11] = "Nov"
+        Months[12] = "Dec"
+
+        var curTime = new Date();
+        var month = Months[curTime.getMonth() + 1];
+        var day = curTime.getDate();
+        var year = curTime.getFullYear();
+
+        let hours = curTime.getHours();
+        let min = curTime.getMinutes();
+        let period = "AM";
+        if (hours > 11) {
+            period = "PM";
+            if (hours > 12) hours -= 12;
+
+
+        }
+
+        if (min < 10) {
+            min = "0" + min
+        }
+        return ` ${month} ${day} | ${hours}:${min}${period}`
+
+
+    }
+    Curdate.innerHTML = getCurday() + " | " + getCurTime();
+</script>
+
+</html>
